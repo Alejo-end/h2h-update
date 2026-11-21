@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>H2H. Update and test</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0d'/%3E%3Crect x='7' y='15' width='50' height='34' rx='6' fill='none' stroke='%23d1916b' stroke-width='3.5'/%3E%3Cpath d='M15 23v18M15 32h9M24 23v18M40 23v18M40 32h9M49 23v18' stroke='%23d1916b' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3Cpath d='M28.5 22.5q3.5-3 6 0q1.5 2.5-6 7h6.5' stroke='%23d1916b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <img class="mark" src="img/h2h-logo.svg" width="127" height="62" alt="H2H">
+      <div>
+        <h1>Update and test</h1>
+        <p class="lede">Plug both USB ports of the board into this computer.</p>
+      </div>
+      <p class="needs" id="needs" hidden>This page needs Chrome or Edge on a computer. Other browsers cannot talk to H2H.</p>
+    </header>
+
+    <section class="col left">
+      <div class="block">
+        <p class="tag"><span class="idx">01</span>connect</p>
+        <h2>The two sides</h2>
+        <p id="connect-text">The plate lights up when this computer sees a side.</p>
+        <button class="btn btn-sm" id="allow-midi" hidden>Let the page see H2H</button>
+        <dl class="sides">
+          <div class="side-row blue">
+            <dt><b class="blue">host blue</b></dt>
+            <dd id="blue-state">not seen</dd>
+          </div>
+          <div class="side-row red">
+            <dt><b class="red">host red</b></dt>
+            <dd id="red-state">not seen</dd>
+          </div>
+        </dl>
+        <p class="fine" id="connect-note" aria-live="polite"></p>
+      </div>
+
+      <div class="block">
+        <p class="tag"><span class="idx">02</span>update</p>
+        <h2 id="latest">Firmware</h2>
+        <p class="fine notes" id="notes"></p>
+        <div class="row">
+          <button class="btn btn-sm btn-ghost" id="update-blue" disabled>Update host blue</button>
+          <button class="btn btn-sm btn-ghost" id="update-red" disabled>Update host red</button>
+        </div>
+        <div class="flow" id="flow" hidden aria-live="polite">
+          <p class="flow-text" id="flow-text"></p>
+          <div class="row">
+            <button class="btn btn-sm" id="flow-button" hidden></button>
+            <button class="quiet" id="flow-cancel">Stop</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <figure class="stage">
+      <div class="diagram-host" id="plate-host"></div>
+      <figcaption class="doing" id="doing" aria-live="polite">Waiting for H2H.</figcaption>
+    </figure>
+
+    <section class="col right">
+      <div class="block">
+        <p class="tag"><span class="idx">03</span>test</p>
+        <h2>Every path</h2>
+        <p>Every message type, SysEx up to 10 KB, 2000 notes at once and a clock, both ways. About half a minute.</p>
+        <div class="row">
+          <button class="btn btn-sm" id="run-tests">Run the test</button>
+          <span class="fine" id="test-progress" aria-live="polite"></span>
+        </div>
+        <div class="results" id="results"></div>
+      </div>
+
+      <div class="block">
+        <p class="tag"><span class="idx">04</span>by hand</p>
+        <h2>At the board</h2>
+        <ul class="hands">
+          <li>
+            <span class="what"><b>panic</b> Press it when asked.</span>
+            <button class="btn btn-sm btn-ghost" id="check-panic">Check</button>
+            <span class="outcome" id="panic-out" aria-live="polite"></span>
+          </li>
+          <li>
+            <span class="what"><b>a trs b</b> Flip it when asked.</span>
+            <button class="btn btn-sm btn-ghost" id="check-switch">Check</button>
+            <span class="outcome" id="switch-out" aria-live="polite"></span>
+          </li>
+          <li>
+            <span class="what"><b>midi in</b> Play a keyboard on it.</span>
+            <button class="btn btn-sm btn-ghost" id="check-in">Check</button>
+            <span class="outcome" id="in-out" aria-live="polite"></span>
+          </li>
+          <li>
+            <span class="what"><b>midi out</b> A synth plays nine notes.</span>
+            <button class="btn btn-sm btn-ghost" id="check-out">Play</button>
+            <span class="outcome" id="out-out" aria-live="polite"></span>
+          </li>
+        </ul>
+        <p class="fine">Never plug midi out into midi in. H2H passes midi in on to midi out, so the messages go round forever.</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <details>
+        <summary>Update without this page</summary>
+        <p>Hold the BOOT button of one side while you plug in its USB cable. A drive named RPI-RP2 opens. Drag the firmware file onto it, and the side restarts with it. The second file is only for a blue side whose role is fixed in the firmware.</p>
+        <p id="downloads">Loading the firmware list.</p>
+      </details>
+      <details class="log">
+        <summary>Details for support</summary>
+        <pre id="log"></pre>
+      </details>
+      <span class="sign">coast 2 coast</span>
+    </footer>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

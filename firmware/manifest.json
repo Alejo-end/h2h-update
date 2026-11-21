@@ -1,0 +1,13 @@
+{
+  "releases": [
+    {
+      "version": "2026-11-21",
+      "notes": "Faster link and USB input, a fix for a USB hang under heavy MIDI in both directions, a fix for long SysEx at MIDI speed reaching a host cut off, a link gate against a broken link line, panic note offs and sustain off, USB serial numbers that end in -R or -B, an orange blink when the two sides run different firmware, and an answer to this page over MIDI.",
+      "files": {
+        "normal": "2026-11-21/h2h-2026-11-21.uf2",
+        "force_blue": "2026-11-21/h2h-2026-11-21-force-blue.uf2"
+      }
+    }
+  ],
+  "latest": "2026-11-21"
+}
